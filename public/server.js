@@ -4,6 +4,9 @@
 var http = require('http'),
 	express = require('express');
 	path = require('path');
+	MongoClient = require('mongodb').MongoClient;
+	Server = require('mongodb').Server;
+	CollectionDriver = require('./collectionDriver').CollectionDriver;
 // Init express and set default port
 var app = express();
 app.set('port', process.env.PORT || 3000);

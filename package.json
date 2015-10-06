@@ -4,6 +4,8 @@
 	"private":true,
 	"dependencies":{
 		"express":"*",
-		"jade":"*"
+		"jade":"*",
+		"mongodb":"*",
+		"body-parser": "1.8"
 	}
 }

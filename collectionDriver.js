@@ -11,14 +11,17 @@ CollectionDriver.prototype.getCollection = function(collectionName, callback) {
     else callback(null, the_collection);
   });
 };
-
+// .find() returns all founded objects
 CollectionDriver.prototype.findAll = function(collectionName, callback) {
     this.getCollection(collectionName, function(error, the_collection) { //A
       if( error ) callback(error);
       else {
         the_collection.find().toArray(function(error, results) { //B
           if( error ) callback(error);
-          else callback(null, results);
+          else {
+            console.log(results);
+            callback(null, results);
+          }
         });
       }
     });
@@ -37,4 +40,18 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) { //A
         }
     });
 };
+//save new object
+CollectionDriver.prototype.save = function(collectionName, obj, callback) {
+    this.getCollection(collectionName, function(error, the_collection) { //A
+      if( error ) callback(error)
+      else {
+        obj.created_at = new Date(); //B
+        the_collection.insertOne(obj, function() { //C
+          callback(null, obj);
+          //console.log(obj);
+        });
+      }
+    });
+};
+
 exports.CollectionDriver = CollectionDriver;
