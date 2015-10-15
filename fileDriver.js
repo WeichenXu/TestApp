@@ -10,7 +10,7 @@ FileDriver.prototype.getCollection = function(callback){
 	});
 };
 // find a specific file
-FileDriver.prototype.get = function(callback){
+FileDriver.prototype.get = function(id, callback){
 	this.getCollection(function(error, the_collection) {
         if (error) callback(error);
         else {
@@ -72,7 +72,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 	     	var writable = fs.createWriteStream(filePath); //7
 	     	req.pipe(writable); //8
              req.on('end', function (){ //9
-               res.send(201,{'_id':id});
+               res.status(201).send({'_id':id});
              });               
              writable.on('error', function(err) { //10
                 res.send(500,err);

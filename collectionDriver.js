@@ -79,4 +79,16 @@ CollectionDriver.prototype.delete = function(collectionName, entityId, callback)
         }
     });
 };
+//perform query
+CollectionDriver.prototype.query = function(collectionName, query, callback){
+  this.getCollection(collectionName,function(error, the_collection){
+    if(err) callback(err);
+    else{
+      the_collection.find(query).toArray(function(err, results){
+        if(err) callback(err);
+        else callback(null, results);
+      });
+    }
+  });
+};
 exports.CollectionDriver = CollectionDriver;

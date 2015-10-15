@@ -43,6 +43,15 @@ app.get('/files/:id', function(req, res) {fileDriver.handleGet(req,res);});
 
 app.get('/:collection', function(req, res) { //A
    var params = req.params; //B
+   var query = req.query.query;
+   if(query){
+      query = JSON.parse(query);
+      CollectionDriver.query()
+   }
+   else{
+
+   }
+   /*
    collectionDriver.findAll(req.params.collection, function(error, objs) { //C
     	  if (error) { res.send(400, error); } //D
 	      else { 
@@ -50,11 +59,27 @@ app.get('/:collection', function(req, res) { //A
     	          res.render('data',{objects: objs, collection: req.params.collection}); //F
               } else {
 	          res.set('Content-Type','application/json'); //G
+                  console.log(req.params.collection+" size: "+objs.length+"\n");
                   res.send(200, objs); //H
               }
          }
    	});
+*/
 });
+function returnCollectionResults(req, res){
+  return function(err, objs){
+    if(err) res.status(400).send(err);
+    else{
+      if(req.accept('html')){
+        res.render('data',{objects:objs, collection:req.params.collection});
+      }      
+      else{
+        res.set("Content-Type","application/json");
+        res.status(200).send(objs);
+      }
+    }
+  };
+};
 /*
 app.get('/:a?/:b?/:c?', function (req,res) {
 	res.send(req.params.a + ' ' + req.params.b + ' ' + req.params.c);
